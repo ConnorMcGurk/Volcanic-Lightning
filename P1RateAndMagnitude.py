@@ -71,20 +71,6 @@ import matplotlib.pyplot as plt
 Conn = sqlite3.connect('Data.db')
 C = Conn.cursor()
 
-def Distance(VCoords, SCoords):
-    """Calculate the distance in km between two points given in decimal degrees.
-    Uses Haversine formula, i.e. assuming perfectly spherical earth
-    See: https://www.movable-type.co.uk/scripts/latlong.html for example"""
-    #Convert to radians
-    lon1,lat1,lon2,lat2 = map(math.radians, VCoords+SCoords)
-    #Apply Haversine formula
-    dlon = lon2-lon1
-    dlat = lat2-lat1
-    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
-    c = 2 * math.asin(math.sqrt(a))
-    #Earth radius = 6371km
-    return 6371 * c
-
 def JulianDay(ADate):
     """Converts a date into a single number matching that returned by the sqlite julianday function"""
     C.execute('''SELECT julianday(?)''', (ADate,))
@@ -108,7 +94,6 @@ Lons = C.fetchall()
 C.execute("""SELECT Mag FROM T""")
 Mags = C.fetchall()
 SCoordsList = [[Lats[i][0],Lons[i][0]] for i in range(0, len(Lats))]
-Distances = [Distance(Location, i) for i in SCoordsList]
 
 Start = JulianDay(StartDate)
 End = JulianDay(EndDate)

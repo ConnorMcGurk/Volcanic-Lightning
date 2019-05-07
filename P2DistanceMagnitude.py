@@ -45,7 +45,7 @@ def Distance(VCoords, SCoords):
     Uses Haversine formula, i.e. assuming perfectly spherical earth
     See: https://www.movable-type.co.uk/scripts/latlong.html for example"""
     #Convert to radians
-    lon1,lat1,lon2,lat2 = map(math.radians, VCoords+SCoords)
+    lat1,lon1,lat2,lon2 = map(math.radians, VCoords+SCoords)
     #Apply Haversine formula
     dlon = lon2-lon1
     dlat = lat2-lat1
@@ -70,7 +70,7 @@ except:
 C.execute('''CREATE TABLE T
 (No INT PRIMARY KEY, Date DATE, Lat REAL, Lon REAL, Mag REAL)''')
 C.execute("""INSERT INTO T
-SELECT * FROM Strikes WHERE Date BETWEEN ? AND ?""", (StartDate,EndDate))
+SELECT No, Date, Lat, Lon, Mag FROM Strikes WHERE Date BETWEEN ? AND ?""", (StartDate,EndDate))
 
 #Get data lists from SQL
 C.execute("""SELECT julianday(Date) FROM T""")

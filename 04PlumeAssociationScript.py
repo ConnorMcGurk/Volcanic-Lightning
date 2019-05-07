@@ -36,7 +36,7 @@ def Distance(VCoords, SCoords):
     Uses Haversine formula, i.e. assuming perfectly spherical earth
     See: https://www.movable-type.co.uk/scripts/latlong.html for example"""
     #Convert to radians
-    lon1,lat1,lon2,lat2 = map(math.radians, VCoords+SCoords)
+    lat1,lon1,lat2,lon2 = map(math.radians, VCoords+SCoords)
     #Apply Haversine formula
     dlon = lon2-lon1
     dlat = lat2-lat1
